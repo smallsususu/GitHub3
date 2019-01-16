@@ -1,0 +1,46 @@
+
+一、jsonp与ajax（跨域：不同域名间的数据传递）
+    如果使用ajax数据加载第三方网站会报错：
+    // No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost' is therefore not allowed access.
+    
+    jsonp==json with padding
+    实现原理：
+    1、使用script标签引入数据（将json数据放入函数调用的参数中）
+    2、定义函数，函数即为上面的函数
+    3、在定义的函数内使用传过来的数据
+    4、优化：将script带来的数据作为动态加载，只有需要的时候才请求，这样就做到了类似于ajax的效果
+    
+
+二、如何实现
+
+    1、使用原生JS
+        需要声明一个函数，该函数名称即为jsonp的那个函数调用
+        比如：
+        function fun1(json){
+            //得到json后做什么
+        }
+        也就是说这种方式类似于原生的JS，只是我们在需要的时候通过点击按钮，然后调用jsonp，再得到数据。
+
+        完整例子：
+        JS：
+        a、函数声明：
+            function fun1(json){
+                //得到json后做什么，比如将json提取出来并插入到对应的DOM元素中
+
+            }
+
+        b、按需加载jsonp资源（该jsonp是后台开发人员或者第三方的网站提供给你的）
+
+        window.onload=function(){
+            var btn=document.getElementById("");
+            //按需加载，点击的时候再去请求资源，请求资源的方式即为点击按钮时动态添加一个script标签
+            var script=document.createElement("script");
+            script.src="jsonp地址";
+            document.body.appendChild(script);
+            //注意这里最好需要if判断下，jsonp是否有内容过来
+        }
+
+        注意：原生JS的ajax无法实现请求jsonp的资源过来
+
+    2、使用jquery的ajax方法
+        方法同ajax请求，但是需要添加/改变两个参数：data类型和回调函数是什么

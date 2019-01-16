@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+     <input type="text" name="" id="ipt">
+    <input type="button" id="btn" value="搜索建议">
+    <ul id="list">
+        
+    </ul>
+    <script>
+    $("#btn").click(function(){
+
+
+        $.ajax({
+            // url地址用jquery，后面的回调不写,交由jquery的jsonp来拼接
+            url:"https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+$("#ipt").val()+"&json=1",
+            // data:{}
+            // jsonp使用jquery来实现需要改两个地方
+            // 假设回调函数不是默认的callback，则需要添加jsonp参数
+            jsonp:"cb",
+            // 将数据类型改为jsonp
+            dataType:"jsonp",
+            success:function(res){
+                // 过来的数据处理与之前的一样
+                console.log(res);
+            }
+        });
+    })
+    </script>
+</body>
+</html>
